@@ -3,4 +3,4 @@ all : mancala
 
 
 mancala : mancala.f board.f
-	gfortran -g $^ -o $@
+	gfortran -fimplicit-none -g $^ -o $@

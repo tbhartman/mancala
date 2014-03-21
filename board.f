@@ -46,6 +46,8 @@ c     [    |  6  5  4  3  2  1 |  7 ]
       integer rocks
       integer counter
       integer next
+      integer opposite
+      integer mancala
       
       player = board(15)
       next = spot
@@ -62,8 +64,18 @@ c     [    |  6  5  4  3  2  1 |  7 ]
           if (next.ne.7 .and. next.ne.14) then
               if (player.eq.0) then
                   player = 1
+                  mancala = 7
               else
                   player = 0
+                  mancala = 14
+              endif
+              if (board(next).eq.1) then
+                  opposite = OPPOSITE_POCKET(8)
+c                 opposite = OPPOSITE_POCKET(next)
+                  board(mancala) = board(mancala) + board(next)
+                  board(mancala) = board(mancala) + board(opposite)
+                  board(next) = 0
+                  board(opposite) = 0
               endif
           endif
       endif
@@ -71,6 +83,14 @@ c     [    |  6  5  4  3  2  1 |  7 ]
       RETURN
 
       END
+
+      integer function OPPOSITE_POCKET(pocket)
+      integer pocket
+      OPPOSITE_POCKET = 0
+c     OPPOSITE_POCKET = 14 - pocket
+      return
+      end
+      
       integer function isgameover(board)
       integer board(15)
       integer total

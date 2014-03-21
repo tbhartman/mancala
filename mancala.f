@@ -7,10 +7,7 @@
       player = board(15)
       call INITIALIZE_BOARD(board)
       call printboard(board)
-      call MOVE(board,4,validmove)
-      call printboard(board)
-      call MOVE(board,3,validmove)
-      call printboard(board)
+  100 continue
       player = board(15)
       write(*,*)'Where to move?'
       read(*,10) nextmove
@@ -18,9 +15,17 @@
       if (player.ne.0) then
           nextmove = nextmove + 7
       endif
-      write(*,*) nextmove
       call MOVE(board,nextmove,validmove)
+      if (validmove.eq.0) then
+          write(*,*) 'Invalid move!'
+          goto 100
+      endif
       call printboard(board)
-      write(*,*) isgameover(board)
+      if (isgameover(board).ne.0) then
+          write(*,*) 'Game over!'
+          goto 200
+      endif
+      goto 100
+  200 continue
       END
 
